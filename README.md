@@ -412,7 +412,7 @@ Daí foi só conectar e criar a visualização, confesso que não me preocupei m
 ![image](https://github.com/Jezandre/north_wind_db/assets/63671761/cdb9ed1c-a539-4d9b-aa3e-30aaaebf8980)
 
 
-##Conclusão
+## Conclusão
 
 Este projeto, apesar de simples, me proporcionou absorver conhecimentos relacionados a:
 - Utilização de Ferramentas da Nuvem AWS: Como por exemplo o bucket S3 e redshift e entender o poder destas ferramentas para o processamento de dados.
