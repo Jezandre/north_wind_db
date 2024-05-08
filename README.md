@@ -33,7 +33,7 @@ O fluxo de dados seguirá da seguinte forma:
 
 os dados são obtidos atrvés de arquivos cvs salvos dentro de um bucket S3. Através de SQL, os dados são inseridos num banco de dados no redshift e a partir daí elaboramos as consultas sql que podem ser enviadas para um dataviz.
 
-![Fluxo de dados](https://github.com/Jezandre/north_wind_db/assets/63671761/54b70f48-0c02-4140-8038-2a3321ecf376)
+![Untitled (7)](https://github.com/Jezandre/north_wind_db/assets/63671761/8b761ac3-b67e-44c7-8e39-ed300649a326)
 
 Vale ressaltar que os serviços da AWS costumam ter algumas cobrança, então fique atento e consulte as documentações
 ###Importando dados para um bucket S3
@@ -361,3 +361,63 @@ SELECT
 ### Visualização de dados
 
 Desta maneira temos todas as querys necessárias para criarmos nossas visualizações. Irei utilizar o Google stutio para que possamos visaulizar gráficamente os dados que demonstramos via query.
+
+Para a elaboração do dashboard, não utilizei a conexão direta com a aws para evitar custos desnecessário. Então utilizei a seguinte função python para inserir os dados dentro de um banco mysql que tenho na minha máquina e adaptei as querys para o mysql. Dessa maneira consegui trazer as visualizações sem muitos problemas.
+
+Basicamente esta função utiliza a biblioteca SQLaclchemy e de acordo com os parametros que eu informar os dados serão inseridos no banco sem muito esforço.
+
+```Python
+
+class InserirDados:
+from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy.sql import select
+
+    def inserirDadosMysql(df, tabela, comando):
+
+        # Conexão bd 
+        usuario = <<Usiario do banco de dados>>
+        senha = <<Senha>>
+        host = <<host>> 
+        nome_do_banco = <<nome do banco de dados>>
+
+        # Configurando Engine do MySQL
+        engine = create_engine(f'mysql+mysqlconnector://{usuario}:{senha}@{host}/{nome_do_banco}')        
+
+        # Comando criar tabela, atualizar e inserir registros na tabela
+        df.to_sql(name=tabela, con=engine, if_exists=comando, index=False)
+        con = engine.connect()
+        con.close()
+
+        print(f'Dados inseridos com sucesso na tabela {tabela}')
+
+```
+Exemplo de uso.
+
+```Python
+
+import datetime
+import pandas as pd
+import os
+
+tabela = 'orderdetails'
+pasta = f"L:/Curso Engenharia de dados/17.Projeto Final I/scripts/{tabela}.csv"
+df = pd.read_csv(pasta, sep=";")
+print(df)
+InserirDados.inserirDadosMysql(df=df, tabela=tabela, comando='replace')
+
+```
+
+Daí foi só conectar e criar a visualização, confesso que não me preocupei muito com o visual nem com os filtros, pois eu queria apenas mostrar como seria o resultado do exercio de maneira mais visual e amigável para os gestores.
+
+![image](https://github.com/Jezandre/north_wind_db/assets/63671761/cdb9ed1c-a539-4d9b-aa3e-30aaaebf8980)
+
+
+##Conclusão
+
+Este projeto, apesar de simples, me proporcionou absorver conhecimentos relacionados a:
+- Utilização de Ferramentas da Nuvem AWS: Como por exemplo o bucket S3 e redshift e entender o poder destas ferramentas para o processamento de dados.
+- Manipulação de Dados com SQL: Através da criação de consultas voltadas para as atividades relacionadas.
+- Visualização de Dados: Para simplificar o entendimento dos questionamentos feitos pelo gestor
+- Desenvolvimento de Projetos Práticos: Isso permitiu o entendimento mais claro de todo o conteúdo aprendido durante o curso
+
+Em resumo, este projeto de engenharia de dados proporcionou uma experiência abrangente e prática, envolvendo desde a configuração de infraestrutura na nuvem até a análise e visualização de dados. Foi uma excelente oportunidade para adquirir habilidades essenciais e consolidar o conhecimento em engenharia de dados.
