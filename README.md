@@ -13,6 +13,9 @@
 
 O projeto é bem simples, porém uma dica que eu recebi e que gosto de passar a frente é sempre escreva sobre o que aprendeu. Se possível escreva a mão. Isso ajuda a manter os conceitos aprendidos vivos.
 
+![image](https://github.com/Jezandre/north_wind_db/assets/63671761/1f4e60e5-6822-400e-9c79-17656339e7cf)
+
+
 ## Materiais
 
 Os materiais utilizados foram todos disponibilizados no curso. Mas basicamente faremos um estudo sobre informações de vendas e produtos de um conjunto de dados salvos no CSV chamado Northwinddd. Os materiais se encontram disponíveis nesse repositório caso tenham curiosiadade de aprender um pouco e se desenvolver. As perguntas que iremos responder serão as seguintes:
